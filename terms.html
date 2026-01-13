@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Termos de Serviço - Barber SaaS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #0f172a;
+        color: #cbd5e1;
+      }
+      .glass-card {
+        background: rgba(30, 41, 59, 0.7);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+      }
+      .accent-gradient {
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+    </style>
+  </head>
+  <body class="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto">
+      <div class="text-center mb-12">
+        <h1 class="text-4xl font-black uppercase italic tracking-tighter mb-4">
+          <span class="accent-gradient">Termos de Serviço</span>
+        </h1>
+        <p class="text-slate-500 font-bold uppercase tracking-widest text-xs">
+          Última atualização: 13 de Janeiro de 2026
+        </p>
+      </div>
+
+      <div
+        class="glass-card rounded-[2.5rem] p-8 sm:p-12 space-y-10 shadow-2xl"
+      >
+        <section class="space-y-4">
+          <h2 class="text-xl font-bold text-white flex items-center gap-3">
+            <span
+              class="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-500 flex items-center justify-center text-sm"
+              >1</span
+            >
+            Aceitação dos Termos
+          </h2>
+          <p class="leading-relaxed">
+            Ao utilizar o <strong>Barber SaaS</strong>, você concorda com estes
+            termos. Este é um software de gestão por assinatura (SaaS) que
+            depende da integração com serviços de terceiros.
+          </p>
+        </section>
+
+        <section class="space-y-4">
+          <h2 class="text-xl font-bold text-white flex items-center gap-3">
+            <span
+              class="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-500 flex items-center justify-center text-sm"
+              >2</span
+            >
+            Responsabilidades do Usuário
+          </h2>
+          <ul class="list-disc list-inside space-y-2 ml-4">
+            <li>Manter a segurança de sua conta Google.</li>
+            <li>Configurar corretamente suas chaves de API do Supabase.</li>
+            <li>Garantir a veracidade dos dados de clientes e agendamentos.</li>
+            <li>Não utilizar o sistema para fins ilícitos.</li>
+          </ul>
+        </section>
+
+        <section class="space-y-4">
+          <h2 class="text-xl font-bold text-white flex items-center gap-3">
+            <span
+              class="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-500 flex items-center justify-center text-sm"
+              >3</span
+            >
+            Limitação de Responsabilidade
+          </h2>
+          <div
+            class="bg-amber-500/10 border-l-4 border-amber-500 p-6 rounded-r-2xl"
+          >
+            <p class="text-sm text-amber-200 leading-relaxed italic">
+              "O serviço é fornecido 'como está'. Não nos responsabilizamos por
+              interrupções causadas pelo Google, Supabase ou falhas de
+              configuração do usuário que resultem em perda de dados."
+            </p>
+          </div>
+        </section>
+
+        <section class="space-y-4">
+          <h2 class="text-xl font-bold text-white flex items-center gap-3">
+            <span
+              class="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-500 flex items-center justify-center text-sm"
+              >4</span
+            >
+            Propriedade Intelectual
+          </h2>
+          <p class="leading-relaxed">
+            Todo o design, código e interface do Barber SaaS são protegidos por
+            direitos autorais. O uso do serviço não transfere qualquer direito
+            de propriedade sobre o software.
+          </p>
+        </section>
+
+        <section class="space-y-4 pt-6 border-t border-white/5 text-center">
+          <p class="text-xs text-slate-500">
+            Ao continuar usando o Barber SaaS, você confirma que leu e concorda
+            com todos os pontos acima.
+          </p>
+        </section>
+      </div>
+
+      <div class="mt-12 text-center">
+        <a
+          href="index.html"
+          class="inline-flex items-center gap-2 text-amber-500 font-bold hover:underline"
+        >
+          <svg
+            class="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M10 19l-7-7m0 0l7-7m-7 7h18"
+            ></path>
+          </svg>
+          Voltar ao App
+        </a>
+      </div>
+    </div>
+  </body>
+</html>

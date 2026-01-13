@@ -2100,8 +2100,8 @@ const LoginPage = () => {
   };
 
   return `
-        <div class="flex items-center justify-center min-h-screen bg-pattern p-4 animate-in fade-in duration-700">
-            <div class="max-w-md w-full glass-card p-10 rounded-[3rem] text-center space-y-8 animate-in zoom-in-95 duration-500">
+        <div class="flex items-center justify-center min-h-screen w-full bg-pattern p-4 animate-in fade-in duration-700">
+            <div class="max-w-md w-full glass-card p-10 rounded-[3rem] text-center space-y-8 animate-in zoom-in-95 duration-500 shadow-2xl">
                 <div class="w-20 h-20 bg-amber-500/10 rounded-3xl flex items-center justify-center text-amber-500 mx-auto">
                     <i class="fas fa-rocket text-3xl"></i>
                 </div>
@@ -2116,7 +2116,15 @@ const LoginPage = () => {
                     Entrar com Google
                 </button>
                 
-                <p class="text-[10px] text-slate-600 uppercase font-black tracking-[0.2em]">Bem-vindo à nova era da gestão</p>
+                <div class="flex flex-col gap-4">
+                    <p class="text-[10px] text-slate-600 uppercase font-black tracking-[0.2em]">Bem-vindo à nova era da gestão</p>
+                    
+                    <div class="flex justify-center gap-4 text-[10px] uppercase font-black text-slate-500/50 pt-4 border-t border-white/5">
+                        <a href="privacy.html" target="_blank" class="hover:text-amber-500 transition-all">Privacidade</a>
+                        <span class="opacity-20">|</span>
+                        <a href="terms.html" target="_blank" class="hover:text-amber-500 transition-all">Termos de Uso</a>
+                    </div>
+                </div>
             </div>
         </div>
     `;

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Política de Privacidade - Barber SaaS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #0f172a;
+        color: #cbd5e1;
+      }
+      .glass-card {
+        background: rgba(30, 41, 59, 0.7);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+      }
+      .accent-gradient {
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+    </style>
+  </head>
+  <body class="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto">
+      <div class="text-center mb-12">
+        <h1 class="text-4xl font-black uppercase italic tracking-tighter mb-4">
+          <span class="accent-gradient">Política de Privacidade</span>
+        </h1>
+        <p class="text-slate-500 font-bold uppercase tracking-widest text-xs">
+          Última atualização: 13 de Janeiro de 2026
+        </p>
+      </div>
+
+      <div
+        class="glass-card rounded-[2.5rem] p-8 sm:p-12 space-y-10 shadow-2xl"
+      >
+        <section class="space-y-4">
+          <h2 class="text-xl font-bold text-white flex items-center gap-3">
+            <span
+              class="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-500 flex items-center justify-center text-sm"
+              >1</span
+            >
+            Informações que Coletamos
+          </h2>
+          <p class="leading-relaxed">
+            Ao utilizar nosso serviço, podemos coletar as seguintes informações:
+          </p>
+          <ul class="list-disc list-inside space-y-2 ml-4">
+            <li>
+              <strong class="text-slate-200"
+                >Informações de Autenticação:</strong
+              >
+              Nome, e-mail e foto de perfil via Google OAuth.
+            </li>
+            <li>
+              <strong class="text-slate-200">Dados de Uso:</strong>
+              Agendamentos, clientes e procedimentos cadastrados.
+            </li>
+            <li>
+              <strong class="text-slate-200">Informações Técnicas:</strong> IP,
+              tipo de navegador e dados do dispositivo.
+            </li>
+          </ul>
+        </section>
+
+        <section class="space-y-4">
+          <h2 class="text-xl font-bold text-white flex items-center gap-3">
+            <span
+              class="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-500 flex items-center justify-center text-sm"
+              >2</span
+            >
+            Como Usamos seus Dados
+          </h2>
+          <p class="leading-relaxed">
+            Utilizamos as informações coletadas para:
+          </p>
+          <ul class="list-disc list-inside space-y-2 ml-4">
+            <li>Operar e manter o dashboard de gestão.</li>
+            <li>Personalizar sua experiência no aplicativo.</li>
+            <li>Garantir a segurança da sua conta e prevenir fraudes.</li>
+            <li>Sincronizar dados com sua instância privada do Supabase.</li>
+          </ul>
+        </section>
+
+        <section class="space-y-4">
+          <h2 class="text-xl font-bold text-white flex items-center gap-3">
+            <span
+              class="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-500 flex items-center justify-center text-sm"
+              >3</span
+            >
+            Armazenamento e Segurança
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-slate-900/50 p-6 rounded-2xl border border-white/5">
+              <h3
+                class="font-bold text-amber-500 mb-2 uppercase text-xs tracking-widest"
+              >
+                Local Storage
+              </h3>
+              <p class="text-sm">
+                Suas credenciais de API são armazenadas localmente no seu
+                navegador para sua conveniência.
+              </p>
+            </div>
+            <div class="bg-slate-900/50 p-6 rounded-2xl border border-white/5">
+              <h3
+                class="font-bold text-amber-500 mb-2 uppercase text-xs tracking-widest"
+              >
+                Privacidade Total
+              </h3>
+              <p class="text-sm">
+                Não temos acesso aos dados salvos no seu banco de dados privado
+                do Supabase.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-4 pt-6 border-t border-white/5">
+          <h2 class="text-xl font-bold text-white">Contato</h2>
+          <p class="leading-relaxed">
+            Se você tiver alguma dúvida sobre esta Política de Privacidade,
+            entre em contato através do e-mail de suporte da plataforma Barber
+            SaaS.
+          </p>
+        </section>
+      </div>
+
+      <div class="mt-12 text-center">
+        <a
+          href="index.html"
+          class="inline-flex items-center gap-2 text-amber-500 font-bold hover:underline"
+        >
+          <svg
+            class="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M10 19l-7-7m0 0l7-7m-7 7h18"
+            ></path>
+          </svg>
+          Voltar ao App
+        </a>
+      </div>
+    </div>
+  </body>
+</html>
