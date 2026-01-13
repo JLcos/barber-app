@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <!-- Configurações de Cabeçalho (Metadados, Fontes e Bibliotecas) -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestão de Barbearia</title>
+
+    <link rel="icon" type="image/x-icon" href="assets/logo.ico" />
+
+    <!-- Frameworks Externos (Tailwind, Chart.js, FontAwesome) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Configuração do Tema Tailwind -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              dark: {
+                950: "var(--bg-950)",
+                900: "var(--bg-900)",
+                800: "var(--bg-800)",
+              },
+              amber: {
+                500: "rgb(var(--accent-rgb))",
+                400: "rgba(var(--accent-rgb), 0.8)",
+                600: "rgba(var(--accent-rgb), 0.9)",
+              },
+            },
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+              display: ["Montserrat", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <!-- Estilos CSS (Variáveis e Scrollbars) -->
+    <style>
+      :root {
+        --bg-950: #121212;
+        --bg-900: #1a1a1a;
+        --bg-800: #262626;
+        --accent-rgb: 245 158 11;
+      }
+      body {
+        background-color: var(--bg-950);
+        color: #f3f4f6;
+        font-family: "Inter", sans-serif;
+        overflow: hidden;
+      }
+      .bg-pattern {
+        background-color: var(--bg-950);
+        background-image: linear-gradient(
+            rgba(255, 255, 255, 0.02) 1px,
+            transparent 1px
+          ),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+        background-size: 40px 40px;
+      }
+      .custom-scroll::-webkit-scrollbar {
+        width: 6px;
+      }
+      .custom-scroll::-webkit-scrollbar-track {
+        background: var(--bg-900);
+      }
+      .custom-scroll::-webkit-scrollbar-thumb {
+        background: var(--bg-800);
+        border-radius: 10px;
+      }
+      .glass-card {
+        background: rgba(23, 23, 23, 0.7);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+      }
+      * {
+        transition: border-color 0.2s, background-color 0.2s, color 0.1s;
+      }
+      /* Inversão de Cores no Hover para Botões Principais */
+      button.bg-amber-500:hover,
+      button[class*="bg-amber-500"]:hover {
+        background-color: var(--bg-950) !important;
+        color: rgb(var(--accent-rgb)) !important;
+        border-color: rgb(var(--accent-rgb)) !important;
+        box-shadow: 0 0 15px rgba(var(--accent-rgb), 0.2);
+      }
+    </style>
+  </head>
+  <body class="flex h-screen w-full">
+    <!-- Container Principal do Aplicativo (SPA) -->
+    <div id="app" class="flex w-full h-full">
+      <!-- O conteúdo (Sidebar, Dashboard, etc) é injetado aqui pelo JavaScript -->
+    </div>
+
+    <!-- Arquivo Lógica Principal -->
+    <script type="module" src="index.js"></script>
+  </body>
+</html>
