@@ -7,8 +7,8 @@
 // 1. CONFIGURAÇÕES E CREDENCIAIS (PLATAFORMA SaaS)
 // ==========================================
 // ESTAS SÃO AS CHAVES DA SUA PLATAFORMA (Onde os usuários fazem o login inicial)
-const SAAS_MASTER_URL = "SUA_URL_MASTER_AQUI"; // Ex: https://xxx.supabase.co
-const SAAS_MASTER_KEY = "SUA_KEY_MASTER_AQUI"; // Ex: eyJhbGciOiJIUzI1Ni...
+const SAAS_MASTER_URL = "https://nswyqhyrdncmaikkhabz.supabase.co"; // Ex: https://xxx.supabase.co
+const SAAS_MASTER_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5zd3lxaHlyZG5jbWFpa2toYWJ6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjgzMzg1MzAsImV4cCI6MjA4MzkxNDUzMH0.yG0y3jDS70h81tJfBDAxM0nXoL_E191zkC_vQnU2Dio"; // Ex: eyJhbGciOiJIUzI1Ni...
 
 let supabaseClient = null;
 
@@ -71,6 +71,12 @@ const state = {
   showEmptySlots: true,
   managementSearch: "",
   user: null,
+  subscription: {
+    plan: 'free', // 'free', 'pro', 'vip'
+    status: 'inactive',
+    usageCount: 0,
+    limit: 10 // Limite de agendamentos no free
+  }
 };
 
 // ==========================================
@@ -267,7 +273,11 @@ function navigate(page, time = null) {
 // 6. COMPONENTES DE INTERFACE (UI)
 // ==========================================
 
-const Sidebar = () => `
+const Sidebar = () => {
+    const user = state.user;
+    const userAvatar = user?.user_metadata?.avatar_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(user?.email || 'U')}&background=F59E0B&color=fff`;
+
+    return `
     <aside class="hidden md:flex w-64 bg-dark-900 border-r border-white/5 flex flex-col h-full transition-all duration-300">
         <div class="p-6 overflow-hidden">
             <h1 class="text-xl font-display font-extrabold text-amber-500 tracking-tighter italic whitespace-nowrap">
@@ -280,23 +290,29 @@ const Sidebar = () => `
             ${NavLink("records", "fa-table", "Agendamentos")}
             ${NavLink("manage", "fa-calendar-plus", "Agendar")}
             ${NavLink("clients", "fa-sliders", "Gestão")}
+            ${NavLink("pricing", "fa-crown", "Planos & Pro")}
             ${NavLink("setup", "fa-gears", "Configuração")}
         </nav>
-        <div class="p-4 border-t border-white/5">
-            <div class="flex items-center space-x-3 p-2 rounded-xl bg-dark-950/50">
-                <div class="w-10 h-10 rounded-full border border-white/10 overflow-hidden bg-dark-900 shadow-lg shadow-black/20">
-                    <img src="assets/logo.png" class="w-full h-full object-cover" onerror="this.src='https://ui-avatars.com/api/?name=Admin&background=F59E0B&color=000'">
+        
+        <div class="p-4 border-t border-white/5 space-y-4">
+            <div class="flex items-center space-x-3 p-2 py-3 rounded-2xl bg-dark-950/50 border border-white/5">
+                <div class="w-10 h-10 rounded-xl border border-white/10 overflow-hidden shadow-lg">
+                    <img src="${userAvatar}" class="w-full h-full object-cover">
                 </div>
                 <div class="flex-1 min-w-0">
-                    <!-- Nome do Barbeiro/Perfil -->
-                    <p class="text-sm font-semibold truncate text-white uppercase">Administrador</p>
-                    <!-- Label de Status da Conta -->
-                    <p class="text-[10px] text-amber-500 font-bold uppercase tracking-widest">SaaS Edition</p>
+                    <p class="text-[11px] font-black truncate text-white uppercase tracking-tighter">${user?.user_metadata?.full_name || 'Barbeiro'}</p>
+                    <p class="text-[8px] text-amber-500 font-black uppercase tracking-widest leading-none mt-0.5">Premium</p>
                 </div>
             </div>
+            
+            <button onclick="window.signOut()" class="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-rose-500/10 text-rose-500 font-black text-[10px] uppercase tracking-widest border border-rose-500/5 hover:bg-rose-500 hover:text-white transition-all group">
+                <i class="fas fa-power-off text-xs transition-transform group-hover:scale-110"></i>
+                Encerrar Sessão
+            </button>
         </div>
     </aside>
-`;
+    `;
+};
 
 const NavLink = (page, icon, label) => {
   const isActive = state.currentPage === page;
@@ -382,9 +398,6 @@ const Header = () => {
     year: "numeric",
   }).format(today);
 
-  const user = state.user;
-  const userAvatar = user?.user_metadata?.avatar_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(user?.email || 'U')}&background=F59E0B&color=fff`;
-
   return `
         <header class="h-16 md:h-16 border-b border-white/5 flex items-center justify-between px-3 md:px-8 bg-dark-950/80 backdrop-blur-xl sticky top-0 z-20">
             <div class="flex items-center space-x-1.5 md:space-x-4">
@@ -418,17 +431,6 @@ const Header = () => {
                     <span class="font-medium">${formattedDate}</span>
                 </div>
                 
-                <div class="flex items-center bg-dark-900 border border-white/5 p-1 rounded-xl pr-3 gap-3">
-                    <img src="${userAvatar}" class="w-8 h-8 rounded-lg object-cover border border-white/10 shadow-lg">
-                    <div class="hidden sm:block text-left">
-                        <p class="text-[10px] font-black text-white leading-none uppercase tracking-tighter truncate max-w-[100px]">${user?.user_metadata?.full_name || 'Barbeiro'}</p>
-                        <p class="text-[8px] text-amber-500 font-bold uppercase tracking-widest mt-0.5">Premium</p>
-                    </div>
-                    <button onclick="window.signOut()" class="w-6 h-6 flex items-center justify-center text-slate-500 hover:text-rose-500 transition-all ml-1">
-                        <i class="fas fa-power-off text-xs"></i>
-                    </button>
-                </div>
-
                 <button onclick="window.syncAll()" class="w-8 h-8 md:w-10 md:h-10 rounded-xl bg-white/5 hover:bg-amber-500/10 hover:text-amber-500 transition-all flex items-center justify-center border border-white/5 uppercase">
                     <i id="globalSyncBtn" class="fas fa-sync-alt text-xs md:text-sm"></i>
                 </button>
@@ -2130,11 +2132,94 @@ const LoginPage = () => {
     `;
 };
 
+const PricingPage = () => {
+    window.handleSubscribe = async (planId) => {
+        const stripe = Stripe('SUA_CHAVE_PUBLICA_STRIPE'); // Ex: pk_test_...
+        
+        // Em um SaaS real, aqui você chamaria uma Supabase Edge Function
+        // para gerar uma Session ID do Stripe Checkout.
+        alert(`Redirecionando para o Checkout do Stripe (Plano: ${planId})\n\nNota: Configure sua Chave Pública e uma Edge Function para processar o pagamento.`);
+    };
+
+    const PlanCard = (name, price, features, id, color = 'amber', recommended = false) => `
+        <div class="relative group ${recommended ? 'scale-105 z-10' : ''}">
+            ${recommended ? '<div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-amber-500 text-dark-950 text-[10px] font-black px-4 py-1 rounded-full uppercase tracking-widest shadow-xl">Recomendado</div>' : ''}
+            <div class="glass-card p-8 rounded-[2.5rem] flex flex-col h-full border ${recommended ? 'border-amber-500/30' : 'border-white/5'} hover:border-amber-500/20 transition-all duration-500">
+                <div class="mb-8">
+                    <h3 class="text-xs font-black uppercase tracking-[0.3em] text-slate-500 mb-2">${name}</h3>
+                    <div class="flex items-baseline gap-1">
+                        <span class="text-4xl font-display font-black text-white italic">R$${price}</span>
+                        <span class="text-slate-500 text-xs font-bold uppercase">/mês</span>
+                    </div>
+                </div>
+                
+                <ul class="space-y-4 mb-8 flex-1">
+                    ${features.map(f => `
+                        <li class="flex items-center gap-3 text-sm text-slate-300">
+                            <i class="fas fa-check-circle text-${color}-500 text-xs"></i>
+                            ${f}
+                        </li>
+                    `).join('')}
+                    ${name === 'Gratuito' ? `
+                        <li class="flex items-center gap-3 text-sm text-slate-500 line-through">
+                            <i class="fas fa-times-circle text-xs opacity-50"></i>
+                            Suporte Prioritário
+                        </li>
+                    ` : ''}
+                </ul>
+
+                <button onclick="window.handleSubscribe('${id}')" 
+                        class="w-full py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] transition-all transform active:scale-95
+                        ${recommended ? 'bg-amber-500 text-dark-950 hover:bg-white hover:text-dark-950' : 'bg-white/5 text-white hover:bg-white/10 border border-white/10'}">
+                    ${name === 'Gratuito' ? 'Plano Atual' : 'Assinar Agora'}
+                </button>
+            </div>
+        </div>
+    `;
+
+    return `
+        <div class="p-6 sm:p-12 max-w-6xl mx-auto space-y-12 animate-in fade-in duration-700">
+            <div class="text-center space-y-4">
+                <h2 class="text-4xl sm:text-6xl font-display font-black uppercase italic tracking-tighter">
+                    Escolha seu <span class="text-amber-500">Plano</span>
+                </h2>
+                <p class="text-slate-400 max-w-xl mx-auto text-sm sm:text-base leading-relaxed">
+                    Desbloqueie o poder total da sua barbearia com ferramentas profissionais e sincronização ilimitada.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pt-8">
+                ${PlanCard('Gratuito', '0', ['Até 10 agendamentos/mês', 'Gestão de Clientes', 'Dashboard Básico'], 'free')}
+                ${PlanCard('Profissional', '49,90', ['Agendamentos Ilimitados', 'Dashboard Avançado', 'Suporte 24h', 'Personalização de Cores'], 'pro', 'amber', true)}
+                ${PlanCard('VIP Enterprise', '99,90', ['Tudo do Pro', 'Multi-unidades', 'IA Preditiva de Demanda', 'Backup Diário'], 'vip', 'amber')}
+            </div>
+
+            <div class="bg-dark-900/50 p-8 rounded-[2.5rem] border border-white/5 flex flex-col md:flex-row items-center justify-between gap-6 mt-12">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-2xl bg-amber-500/10 flex items-center justify-center text-amber-500">
+                        <i class="fas fa-shield-halved text-xl"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold">Pagamento 100% Seguro</h4>
+                        <p class="text-slate-500 text-xs">Processado via Stripe. Cancele quando quiser.</p>
+                    </div>
+                </div>
+                <div class="flex gap-4">
+                    <i class="fab fa-cc-visa text-2xl text-slate-600"></i>
+                    <i class="fab fa-cc-mastercard text-2xl text-slate-600"></i>
+                    <i class="fab fa-cc-apple-pay text-2xl text-slate-600"></i>
+                </div>
+            </div>
+        </div>
+    `;
+};
+
 const pages = {
   dashboard: Dashboard,
   records: RecordsPage,
   manage: ManagePage,
   clients: ClientsPage,
+  pricing: PricingPage,
   setup: SetupPage,
 };
 
